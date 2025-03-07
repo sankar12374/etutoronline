@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration</title>
+  <style>
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .form-container {
+      background: #ffffff;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: bounce 2s infinite;
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #4f46e5;
+      font-weight: 700;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 2px solid #4f46e5;
+      border-radius: 12px;
+      font-size: 14px;
+      background: #f3f4f6;
+      transition: all 0.3s ease;
+    }
+
+    .form-container input:focus {
+      border-color: #ff6b6b;
+      background: #ffffff;
+      outline: none;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #4f46e5, #6b46e5);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .form-container button:hover {
+      background: linear-gradient(135deg, #ff6b6b, #ff9a9e);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2> Student Registration </h2>
+    <form id="registration-form">
+      <input type="text" name="fullName" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+      <button type="submit"> Register Now </button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js';
+
+    const supabaseUrl = 'https://ifztgewdgcfxppsocsco.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmenRnZXdkZ2NmeHBwc29jc2NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA3OTY0MTAsImV4cCI6MjA1NjM3MjQxMH0.I8zh1pagpB7ZnXiVWvYQ0rUBqqnWtqBb4GaN4Bubw0w';
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const form = document.getElementById('registration-form');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fullName = form.fullName.value;
+      const email = form.email.value;
+      const password = form.password.value;
+      const confirmPassword = form.confirmPassword.value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: fullName }
+        }
+      });
+
+      if (error) {
+        alert(`Error: ${error.message}`);
+      } else {
+        alert('Registration successful! Check your email for confirmation.');
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>

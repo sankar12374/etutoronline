@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #ffafbd, #ffc3a0);
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    display: flex;
+    width: 80%;
+    height: 80%;
+    gap: 20px;
+  }
+  .login-box {
+    flex: 1;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+  }
+  .login-box:hover {
+    transform: translateY(-10px);
+  }
+  .student {
+    background: #a1c4fd;
+  }
+  .faculty {
+    background: #ffdde1;
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
+  input[type="text"], input[type="password"] {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+  }
+  button {
+    background: #ff6f61;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  button:hover {
+    background: #ff4b47;
+    transform: translateY(-5px);
+  }
+  button:hover {
+    background: #ff4b47;
+  }
+  .register {
+    margin-top: 20px;
+  }
+  .e-tutor {
+    position: absolute;
+    font-size: 60px;
+    opacity: 1;
+    animation: float 5s infinite alternate ease-in-out;
+  }
+  .pen {
+    left: 10%;
+    top: 10%;
+  }
+  .pencil {
+    right: 10%;
+    bottom: 10%;
+  }
+  @keyframes float {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-20px);
+    }
+  }

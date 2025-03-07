@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Tutor Login Page</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="login-box student">
+      <h2>Student Login</h2>
+      <input type="text" id="student-email" placeholder="Email" required class="input-box">
+      <input type="password" id="student-password" placeholder="Password" required class="input-box">
+      <button class="input-box" onclick="studentLogin()">Login</button>
+      <p class="register">Not registered? <a href="studentregister.html">Please register here</a></p>
+    </div>
+    <div class="login-box faculty">
+      <h2>Faculty Login</h2>
+      <input type="text" placeholder="Username" class="input-box">
+      <input type="password" placeholder="Password" class="input-box">
+      <button class="input-box">Login</button>
+      <p class="register">Not registered? <a href="#">Please register here</a></p>
+    </div>
+  </div>
+  <div class="e-tutor pen">🖊️</div>
+  <div class="e-tutor pencil">✏️</div>
+
+  <script>
+    const supabaseUrl = 'https://ifztgewdgcfxppsocsco.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmenRnZXdkZ2NmeHBwc29jc2NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA3OTY0MTAsImV4cCI6MjA1NjM3MjQxMH0.I8zh1pagpB7ZnXiVWvYQ0rUBqqnWtqBb4GaN4Bubw0w';
+   
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    async function studentLogin() {
+      const email = document.getElementById('student-email').value;
+      const password = document.getElementById('student-password').value;
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          throw error;
+        }
+
+        alert('Login successful! Welcome, ' + data.user.email);
+        window.location.href = 'login.html'; // Redirect to login.html after successful login
+      } catch (error) {
+        alert('Login failed: ' + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

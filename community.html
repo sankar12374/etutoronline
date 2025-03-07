@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Community Hub</title>
+  <link rel="stylesheet" href="community.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+</head>
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <h2>Community Hub</h2>
+      <ul>
+        <li><a href="#study-group">Study Groups</a></li>
+        <li><a href="#chat">Chat Room</a></li>
+        <li><a href="#mentors">Top Mentors</a></li>
+        <li><a href="#badges">Your Badges</a></li>
+      </ul>
+    </nav>
+    <main class="content">
+      <section id="study-group" class="study-group">
+        <h3>Join a Study Group</h3>
+        <button onclick="startStudyHour()">Start Study Hour</button>
+      </section>
+      <section id="chat" class="chat-box">
+        <h3>Live Chat Room</h3>
+        <input type="text" placeholder="Type your message..." />
+        <button>Send</button>
+      </section>
+      <section id="mentors" class="ranked-mentors">
+        <h3>Top-Ranked Mentors</h3>
+        <ul>
+          <li>Mentor 1 - 5 Badges</li>
+          <li>Mentor 2 - 4 Badges</li>
+        </ul>
+      </section>
+      <section id="badges">
+        <h3>Your Achievements</h3>
+        <p>You have 3 badges!</p>
+      </section>
+    </main>
+  </div>
+  <script>
+    function startStudyHour() {
+      alert('Study hour started! Stay focused!');
+    }
+  </script>
+</body>
+</html>

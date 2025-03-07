@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      background: linear-gradient(to right, #ffafbd, #ffc3a0);
+    }
+    .dashboard-container {
+      display: flex;
+      width: 100%;
+    }
+    .sidebar {
+      width: 250px;
+      background: #6c63ff;
+      color: white;
+      padding: 20px;
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar h2 {
+      text-align: center;
+      font-weight: 700;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      margin: 20px 0;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .sidebar a:hover {
+      color: #ffafbd;
+    }
+    .content {
+      flex: 1;
+      padding: 30px;
+      background: white;
+      border-radius: 25px;
+      margin: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-in;
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    button {
+      background: #ff6f61;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #ffafbd;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <nav class="sidebar">
+      <h2>Welcome, Student!</h2>
+      <ul>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#courses">My Courses</a></li>
+        <li><a href="#assignments">Assignments</a></li>
+        <li><a href="#grades">Grades</a></li>
+        <li><a href="#settings">Settings</a></li>
+        <li><a href="#logout" onclick="logout()">Logout</a></li>
+      </ul>
+    </nav>
+    <main class="content">
+      <section id="profile">
+        <h3>Profile Information</h3>
+        <p>Name: akulamohansanker</p>
+        <p>Email: akulamohansanker@gmail.com</p>
+      </section>
+      <section id="courses">
+        <h3>My Courses</h3>
+        <ul>
+          <li>Mathematics 101</li>
+          <li>Computer Science 201</li>
+          <li>Physics 301</li>
+        </ul>
+      </section>
+      <section id="assignments">
+        <h3>Upcoming Assignments</h3>
+        <ul>
+          <li>Math Homework - Due: Oct 25</li>
+          <li>CS Project - Due: Oct 28</li>
+        </ul>
+      </section>
+      <section id="grades">
+        <h3>Grades</h3>
+        <p>Mathematics 101: A</p>
+        <p>Computer Science 201: B+</p>
+        <p>Physics 301: A-</p>
+      </section>
+      <section id="settings">
+        <h3>Account Settings</h3>
+        <button>Edit Profile</button>
+        <button>Change Password</button>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const supabaseUrl = 'https://YOUR-SUPABASE-URL.supabase.co';
+    const supabaseKey = 'YOUR-SUPABASE-ANON-KEY';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    function logout() {
+      alert('Logging out...');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
