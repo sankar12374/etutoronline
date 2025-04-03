@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Registration | E-Tutor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --primary-color: #6c63ff;
+      --secondary-color: #5a52d3;
+      --accent-color: #ff6f61;
+      --light-color: #f8f9fa;
+      --dark-color: #343a40;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .registration-container {
+      width: 100%;
+      max-width: 800px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .registration-header {
+      background: var(--primary-color);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    
+    .registration-header h1 {
+      font-weight: 500;
+      font-size: 1.8rem;
+    }
+    
+    .registration-form {
+      padding: 2rem;
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    
+    .full-width {
+      grid-column: span 2;
+    }
+    
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+    
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background: var(--secondary-color);
+    }
+    
+    .btn-outline {
+      background: white;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+    }
+    
+    .error-message {
+      color: #dc3545;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+    
+    .login-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="registration-container">
+    <div class="registration-header">
+      <h1>Faculty Registration</h1>
+      <p>Join our team of expert educators</p>
+    </div>
+    
+    <form class="registration-form" id="facultyForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="email">Email Address*</label>
+          <input type="email" id="email" required>
+          <div class="error-message" id="emailError"></div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password* (min 8 chars)</label>
+          <input type="password" id="password" required minlength="8">
+          <div class="error-message" id="passwordError"></div>
+        </div>
+        <div class="form-group">
+          <label for="firstName">First Name*</label>
+          <input type="text" id="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name*</label>
+          <input type="text" id="lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="department">Department*</label>
+          <select id="department" required>
+            <option value="">Select Department</option>
+            <option>Computer Science</option>
+            <option>Mathematics</option>
+            <option>Physics</option>
+            <option>Engineering</option>
+            <option>Business</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="qualification">Highest Qualification*</label>
+          <select id="qualification" required>
+            <option value="">Select Qualification</option>
+            <option>PhD</option>
+            <option>Master's Degree</option>
+            <option>Professional Certification</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+          <label for="specialization">Area of Specialization*</label>
+          <input type="text" id="specialization" required>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="btn btn-outline" onclick="window.location.href='index.html'">Back to Login</button>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </div>
+      
+      <div class="login-link">
+        Already have an account? <a href="index.html">Login here</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Supabase configuration
+    const supabaseUrl = 'https://your-project.supabase.co';
+    const supabaseKey = 'your-anon-key';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Form submission
+    document.getElementById('facultyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const department = document.getElementById('department').value;
+      const qualification = document.getElementById('qualification').value;
+      const specialization = document.getElementById('specialization').value;
+      
+      try {
+        // 1. Create auth user
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              first_name: firstName,
+              last_name: lastName,
+              user_type: 'faculty'
+            }
+          }
+        });
+        
+        if (authError) throw authError;
+        
+        // 2. Save faculty profile
+        const { data: profileData, error: profileError } = await supabase
+          .from('faculty_profiles')
+          .insert([{
+            user_id: authData.user.id,
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            department,
+            qualification,
+            specialization,
+            status: 'pending_approval'
+          }]);
+          
+        if (profileError) throw profileError;
+        
+        alert('Registration successful! Please wait for admin approval.');
+        window.location.href = 'index.html';
+        
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('Registration failed: ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
