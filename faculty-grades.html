@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grades | E-Tutor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-avatar" id="userInitial">F</div>
+        <h2 id="userName">Faculty Member</h2>
+      </div>
+      <ul>
+        <li><a href="faculty-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="faculty-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
+        <li><a href="faculty-students.html"><i class="fas fa-users"></i> Students</a></li>
+        <li><a href="faculty-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+        <li><a href="faculty-grades.html" class="active"><i class="fas fa-graduation-cap"></i> Grades</a></li>
+        <li><a href="faculty-messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+        <li><a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </nav>
+    
+    <main class="content">
+      <div class="header">
+        <h1>Grades</h1>
+        <div class="user-menu">
+          <button id="userEmail">faculty@example.com</button>
+        </div>
+      </div>
+      
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="gradeCourseFilter">Course:</label>
+          <select id="gradeCourseFilter">
+            <option value="all">All Courses</option>
+            <!-- Will be populated dynamically -->
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="gradeAssignmentFilter">Assignment:</label>
+          <select id="gradeAssignmentFilter" disabled>
+            <option value="all">All Assignments</option>
+          </select>
+        </div>
+        <button class="btn-secondary" id="exportGradesBtn">
+          <i class="fas fa-download"></i> Export Grades
+        </button>
+      </div>
+      
+      <div class="grades-container">
+        <div class="grades-overview">
+          <div class="grades-summary">
+            <h3>Grade Distribution</h3>
+            <div class="grade-chart" id="gradeChart">
+              <!-- Chart will be rendered here -->
+            </div>
+          </div>
+          <div class="grades-stats">
+            <h3>Statistics</h3>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <span class="stat-label">Average Grade</span>
+                <span class="stat-value" id="avgGrade">-</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Highest Grade</span>
+                <span class="stat-value" id="maxGrade">-</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Lowest Grade</span>
+                <span class="stat-value" id="minGrade">-</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Submission Rate</span>
+                <span class="stat-value" id="submissionRate">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grades-table-container">
+          <table class="grades-table" id="gradesTable">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Assignment</th>
+                <th>Submitted</th>
+                <th>Grade</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Will be populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Grade Submission Modal -->
+      <div id="gradeModal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h2 id="gradeModalTitle">Grade Assignment</h2>
+          <form id="gradeForm">
+            <div class="form-group">
+              <label for="gradeStudentName">Student</label>
+              <input type="text" id="gradeStudentName" disabled>
+            </div>
+            <div class="form-group">
+              <label for="gradeAssignmentName">Assignment</label>
+              <input type="text" id="gradeAssignmentName" disabled>
+            </div>
+            <div class="form-group">
+              <label for="gradeScore">Grade (0-<span id="maxPoints">100</span>)</label>
+              <input type="number" id="gradeScore" min="0" step="0.1" required>
+            </div>
+            <div class="form-group">
+              <label for="gradeFeedback">Feedback</label>
+              <textarea id="gradeFeedback" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="gradeFiles">Attach Feedback Files</label>
+              <input type="file" id="gradeFiles" multiple>
+            </div>
+            <button type="submit" class="btn-primary">Submit Grade</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="auth.js"></script>
+  <script src="faculty-grades.js"></script>
+</body>
+</html>
