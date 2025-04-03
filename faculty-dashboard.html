@@ -4,69 +4,230 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Faculty Dashboard | E-Tutor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <div class="dashboard-container">
+    <!-- Side Navigation -->
     <nav class="sidebar">
       <div class="sidebar-header">
-        <div class="sidebar-avatar" id="userInitial">F</div>
-        <h2 id="userName">Faculty Member</h2>
+        <div class="sidebar-avatar" id="userInitial">
+          <img src="assets/default-avatar.jpg" alt="User Avatar" id="userAvatar">
+        </div>
+        <div>
+          <h2 id="userName">Faculty Member</h2>
+          <p class="user-role">Professor</p>
+        </div>
       </div>
-      <ul>
-        <li><a href="faculty-dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-        <li><a href="faculty-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
-        <li><a href="faculty-students.html"><i class="fas fa-users"></i> Students</a></li>
-        <li><a href="faculty-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
-        <li><a href="faculty-grades.html"><i class="fas fa-graduation-cap"></i> Grades</a></li>
-        <li><a href="faculty-messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
-        <li><a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      <ul class="nav-menu">
+        <li class="nav-item active">
+          <a href="faculty-dashboard.html" class="nav-link">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+            <span class="nav-notification">3</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="faculty-courses.html" class="nav-link">
+            <i class="fas fa-book-open"></i>
+            <span>My Courses</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="faculty-students.html" class="nav-link">
+            <i class="fas fa-user-graduate"></i>
+            <span>Students</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="faculty-assignments.html" class="nav-link">
+            <i class="fas fa-tasks"></i>
+            <span>Assignments</span>
+            <span class="nav-notification">5</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="faculty-grades.html" class="nav-link">
+            <i class="fas fa-clipboard-check"></i>
+            <span>Grades</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="faculty-messages.html" class="nav-link">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+            <span class="nav-notification">2</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="faculty-settings.html" class="nav-link">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+        <li class="nav-item logout">
+          <a href="index.html" class="nav-link" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </a>
+        </li>
       </ul>
     </nav>
     
+    <!-- Main Content -->
     <main class="content">
       <div class="header">
-        <h1>Faculty Dashboard</h1>
-        <div class="user-menu">
-          <button id="userEmail">faculty@example.com</button>
+        <div class="header-left">
+          <h1>Dashboard Overview</h1>
+          <div class="breadcrumb">
+            <a href="#">Home</a> / <span>Dashboard</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="search-box">
+            <input type="text" placeholder="Search...">
+            <button><i class="fas fa-search"></i></button>
+          </div>
+          <div class="user-profile">
+            <div class="notification-bell">
+              <i class="fas fa-bell"></i>
+              <span class="notification-count">4</span>
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+              <div class="profile-info">
+                <img src="assets/default-avatar.jpg" alt="Profile" id="profileAvatar">
+                <span id="profileName">Dr. Smith</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="dropdown-menu">
+                <a href="#"><i class="fas fa-user"></i> My Profile</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
+      <!-- Stats Cards -->
       <div class="stats-container">
-        <div class="stat-card">
-          <h3>Active Courses</h3>
-          <div class="stat-value" id="activeCourses">0</div>
+        <div class="stat-card primary">
+          <div class="stat-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Active Courses</h3>
+            <div class="stat-value" id="activeCourses">5</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i> 2 from last term
+            </div>
+          </div>
         </div>
-        <div class="stat-card">
-          <h3>Students</h3>
-          <div class="stat-value" id="totalStudents">0</div>
+        
+        <div class="stat-card success">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Total Students</h3>
+            <div class="stat-value" id="totalStudents">87</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i> 12% from last term
+            </div>
+          </div>
         </div>
-        <div class="stat-card">
-          <h3>Pending Grading</h3>
-          <div class="stat-value" id="pendingGrading">0</div>
+        
+        <div class="stat-card warning">
+          <div class="stat-icon">
+            <i class="fas fa-clipboard-list"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Pending Grading</h3>
+            <div class="stat-value" id="pendingGrading">12</div>
+            <div class="stat-change negative">
+              <i class="fas fa-arrow-down"></i> 3 overdue
+            </div>
+          </div>
         </div>
       </div>
       
-      <div class="courses-list">
-        <h2>Recent Courses</h2>
-        <div id="recentCourses">
-          <!-- Dynamically loaded -->
+      <!-- Charts Row -->
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Course Enrollment</h3>
+            <select class="chart-filter">
+              <option>This Semester</option>
+              <option>Last Semester</option>
+              <option>This Year</option>
+            </select>
+          </div>
+          <canvas id="enrollmentChart"></canvas>
+        </div>
+        
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Assignment Completion</h3>
+            <select class="chart-filter">
+              <option>All Courses</option>
+              <option>CS 301</option>
+              <option>MATH 201</option>
+            </select>
+          </div>
+          <canvas id="completionChart"></canvas>
         </div>
       </div>
       
-      <div class="announcements">
-        <h2>Announcements</h2>
-        <div id="announcementsList">
-          <!-- Dynamically loaded -->
+      <!-- Recent Activity and Upcoming Deadlines -->
+      <div class="content-row">
+        <div class="activity-card">
+          <div class="card-header">
+            <h3>Recent Activity</h3>
+            <a href="#" class="view-all">View All</a>
+          </div>
+          <div class="activity-list" id="recentActivity">
+            <!-- Activity items will be loaded here -->
+          </div>
+        </div>
+        
+        <div class="deadlines-card">
+          <div class="card-header">
+            <h3>Upcoming Deadlines</h3>
+            <a href="#" class="view-all">View All</a>
+          </div>
+          <div class="deadlines-list" id="upcomingDeadlines">
+            <!-- Deadline items will be loaded here -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Recent Courses -->
+      <div class="courses-card">
+        <div class="card-header">
+          <h3>Your Courses</h3>
+          <div class="course-actions">
+            <button class="btn btn-outline">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+            <button class="btn btn-primary">
+              <i class="fas fa-plus"></i> Add Course
+            </button>
+          </div>
+        </div>
+        <div class="courses-grid" id="coursesGrid">
+          <!-- Course cards will be loaded here -->
         </div>
       </div>
     </main>
   </div>
 
-  <script src="auth.js"></script>
-  <script src="faculty-dashboard.js"></script>
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/faculty-dashboard.js"></script>
 </body>
 </html>
