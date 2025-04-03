@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Same head content as dashboard.html -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Same sidebar as dashboard.html -->
+    
+    <main class="main-content">
+      <div class="header">
+        <h1>My Profile</h1>
+        <!-- Same user actions as dashboard.html -->
+      </div>
+
+      <div class="profile-container fade-in">
+        <div class="profile-card">
+          <div class="profile-header">
+            <img src="https://ui-avatars.com/api/?name=A+M+S&background=random&size=120" alt="Student Avatar">
+            <h2 id="profileName">Akula Mohan Sanker</h2>
+            <p id="profileEmail">akulamohansanker@gmail.com</p>
+            <button class="edit-btn"><i class="fas fa-edit"></i> Edit Profile</button>
+          </div>
+          
+          <div class="profile-details">
+            <div class="detail-group">
+              <h3>Personal Information</h3>
+              <div class="detail-item">
+                <span class="detail-label">Student ID:</span>
+                <span class="detail-value">STU2023001</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Department:</span>
+                <span class="detail-value">Computer Science</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Semester:</span>
+                <span class="detail-value">5th</span>
+              </div>
+            </div>
+            
+            <div class="detail-group">
+              <h3>Contact Information</h3>
+              <div class="detail-item">
+                <span class="detail-label">Phone:</span>
+                <span class="detail-value">+1 (555) 123-4567</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Address:</span>
+                <span class="detail-value">123 University Ave, Campus Town</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <style>
+    .profile-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .profile-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    
+    .profile-header {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #6c63ff 0%, #5a52d3 100%);
+      color: white;
+    }
+    
+    .profile-header img {
+      border: 4px solid white;
+      margin-bottom: 1rem;
+    }
+    
+    .profile-header h2 {
+      margin-bottom: 0.5rem;
+    }
+    
+    .edit-btn {
+      background: white;
+      color: #6c63ff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 20px;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .edit-btn:hover {
+      background: #f8f9fa;
+      transform: translateY(-2px);
+    }
+    
+    .profile-details {
+      padding: 2rem;
+    }
+    
+    .detail-group {
+      margin-bottom: 2rem;
+    }
+    
+    .detail-group h3 {
+      color: #6c63ff;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .detail-item {
+      display: flex;
+      margin-bottom: 0.8rem;
+    }
+    
+    .detail-label {
+      font-weight: 500;
+      width: 150px;
+      color: #555;
+    }
+    
+    .detail-value {
+      flex: 1;
+    }
+  </style>
+</body>
+</html>
