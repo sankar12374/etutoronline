@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignments | E-Tutor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-avatar" id="userInitial">F</div>
+        <h2 id="userName">Faculty Member</h2>
+      </div>
+      <ul>
+        <li><a href="faculty-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="faculty-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
+        <li><a href="faculty-students.html"><i class="fas fa-users"></i> Students</a></li>
+        <li><a href="faculty-assignments.html" class="active"><i class="fas fa-tasks"></i> Assignments</a></li>
+        <li><a href="faculty-grades.html"><i class="fas fa-graduation-cap"></i> Grades</a></li>
+        <li><a href="faculty-messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+        <li><a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </nav>
+    
+    <main class="content">
+      <div class="header">
+        <h1>Assignments</h1>
+        <div class="user-menu">
+          <button id="userEmail">faculty@example.com</button>
+          <button class="btn-primary" id="createAssignmentBtn">
+            <i class="fas fa-plus"></i> Create Assignment
+          </button>
+        </div>
+      </div>
+      
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="assignmentCourseFilter">Filter by Course:</label>
+          <select id="assignmentCourseFilter">
+            <option value="all">All Courses</option>
+            <!-- Will be populated dynamically -->
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="assignmentStatusFilter">Status:</label>
+          <select id="assignmentStatusFilter">
+            <option value="all">All Statuses</option>
+            <option value="active">Active</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="assignments-container">
+        <div class="assignments-list" id="assignmentsList">
+          <!-- Will be populated dynamically -->
+        </div>
+      </div>
+      
+      <!-- Create Assignment Modal -->
+      <div id="assignmentModal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h2>Create New Assignment</h2>
+          <form id="assignmentForm">
+            <div class="form-group">
+              <label for="assignmentTitle">Title</label>
+              <input type="text" id="assignmentTitle" required>
+            </div>
+            <div class="form-group">
+              <label for="assignmentCourse">Course</label>
+              <select id="assignmentCourse" required>
+                <!-- Will be populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="assignmentDescription">Description</label>
+              <textarea id="assignmentDescription" rows="4" required></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="assignmentDueDate">Due Date</label>
+                <input type="datetime-local" id="assignmentDueDate" required>
+              </div>
+              <div class="form-group">
+                <label for="assignmentMaxPoints">Max Points</label>
+                <input type="number" id="assignmentMaxPoints" min="1" value="100" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="assignmentFiles">Attach Files</label>
+              <input type="file" id="assignmentFiles" multiple>
+            </div>
+            <button type="submit" class="btn-primary">Create Assignment</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="faculty-assignments.js"></script>
+</body>
+</html>
