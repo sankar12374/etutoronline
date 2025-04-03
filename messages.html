@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Same head content as dashboard.html -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Same sidebar as dashboard.html -->
+    
+    <main class="main-content">
+      <div class="header">
+        <h1>Messages</h1>
+        <!-- Same user actions as dashboard.html -->
+      </div>
+
+      <div class="messages-container fade-in">
+        <div class="messages-sidebar">
+          <div class="search-box">
+            <input type="text" placeholder="Search messages...">
+            <i class="fas fa-search"></i>
+          </div>
+          
+          <div class="message-preview active">
+            <div class="preview-header">
+              <h4>Prof. Smith</h4>
+              <span class="time">10:30 AM</span>
+            </div>
+            <p class="preview-text">About your final project submission...</p>
+          </div>
+          
+          <div class="message-preview unread">
+            <div class="preview-header">
+              <h4>Academic Office</h4>
+              <span class="time">Yesterday</span>
+            </div>
+            <p class="preview-text">Important deadline reminder for...</p>
+          </div>
+          
+          <div class="message-preview">
+            <div class="preview-header">
+              <h4>Study Group</h4>
+              <span class="time">Oct 20</span>
+            </div>
+            <p class="preview-text">Meeting tomorrow at the library...</p>
+          </div>
+        </div>
+        
+        <div class="message-content">
+          <div class="message-header">
+            <h3>Prof. Smith</h3>
+            <div class="message-actions">
+              <button><i class="fas fa-reply"></i> Reply</button>
+              <button><i class="fas fa-trash"></i> Delete</button>
+            </div>
+          </div>
+          
+          <div class="message-body">
+            <div class="message-meta">
+              <span class="date">October 23, 2023, 10:30 AM</span>
+            </div>
+            
+            <div class="message-text">
+              <p>Hello Akula,</p>
+              
+              <p>I wanted to follow up on your final project submission for CS 301. Your implementation of the graph traversal algorithm was excellent, but I noticed the visualization component wasn't included.</p>
+              
+              <p>Could you please resubmit with the visualization by Friday? Let me know if you have any questions.</p>
+              
+              <p>Best regards,<br>Prof. Smith</p>
+            </div>
+            
+            <div class="message-attachments">
+              <h4>Attachments</h4>
+              <div class="attachment">
+                <i class="fas fa-file-pdf"></i>
+                <span>Project_Feedback.pdf</span>
+                <a href="#">Download</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="message-reply">
+            <textarea placeholder="Type your reply..."></textarea>
+            <div class="reply-actions">
+              <button class="btn-outline"><i class="fas fa-paperclip"></i> Attach</button>
+              <button class="btn-primary">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <style>
+    .messages-container {
+      display: flex;
+      height: calc(100vh - 150px);
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    
+    .messages-sidebar {
+      width: 300px;
+      border-right: 1px solid #eee;
+      overflow-y: auto;
+    }
+    
+    .search-box {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      position: relative;
+    }
+    
+    .search-box input {
+      width: 100%;
+      padding: 0.5rem 1rem 0.5rem 2rem;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+    }
+    
+    .search-box i {
+      position: absolute;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+    }
+    
+    .message-preview {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+    
+    .message-preview:hover {
+      background: #f8f9fa;
+    }
+    
+    .message-preview.active {
+      background: #f0f2ff;
+    }
+    
+    .message-preview.unread {
+      background: #f8f9fa;
+    }
+    
+    .message-preview.unread h4 {
+      font-weight: 700;
+    }
+    
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.3rem;
+    }
+    
+    .preview-header h4 {
+      margin: 0;
+    }
+    
+    .preview-header .time {
+      color: #6c757d;
+      font-size: 0.8rem;
+    }
+    
+    .preview-text {
+      color: #6c757d;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .message-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    
+    .message-header {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .message-header h3 {
+      margin: 0;
+    }
+    
+    .message-actions button {
+      background: none;
+      border: none;
+      color: #6c63ff;
+      cursor: pointer;
+      margin-left: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .message-body {
+      padding: 1.5rem;
+      flex: 1;
+    }
+    
+    .message-meta {
+      color: #6c757d;
+      margin-bottom: 1.5rem;
+    }
+    
+    .message-text {
+      line-height: 1.8;
+    }
+    
+    .message-attachments {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+    
+    .attachment {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0;
+    }
+    
+    .attachment i {
+      color: #e74a3b;
+      margin-right: 0.8rem;
+      font-size: 1.2rem;
+    }
+    
+    .attachment span {
+      flex: 1;
+    }
+    
+    .message-reply {
+      padding: 1rem;
+      border-top: 1px solid #eee;
+    }
+    
+    .message-reply textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      min-height: 100px;
+      margin-bottom: 1rem;
+      resize: none;
+    }
+    
+    .reply-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+  </style>
+</body>
+</html>
