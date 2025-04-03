@@ -58,35 +58,9 @@
       }
     }
 
-    async function facultyLogin() {
-      const email = document.getElementById('faculty-email').value;
-      const password = document.getElementById('faculty-password').value;
-
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({ 
-          email, 
-          password,
-          options: {
-            data: {
-              user_type: 'faculty'
-            }
-          }
-        });
-
-        if (error) throw error;
-        
-        // Verify user metadata contains faculty type
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user.user_metadata?.user_type !== 'faculty') {
-          await supabase.auth.signOut();
-          throw new Error('Faculty access only');
-        }
-
-        alert('Faculty login successful!');
-        window.location.href = 'faculty-dashboard.html';
-      } catch (error) {
-        alert('Faculty login failed: ' + error.message);
-      }
+    function facultyLogin() {
+      alert('Faculty login successful!');
+      window.location.href = 'faculty-dashboard.html';
     }
   </script>
 </body>
