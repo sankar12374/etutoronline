@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Same head content as dashboard.html -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Same sidebar as dashboard.html -->
+    
+    <main class="main-content">
+      <div class="header">
+        <h1>My Grades</h1>
+        <!-- Same user actions as dashboard.html -->
+      </div>
+
+      <div class="grades-container fade-in">
+        <div class="grades-summary">
+          <div class="summary-card">
+            <h3>Current GPA</h3>
+            <div class="gpa-value">3.75</div>
+            <p>Out of 4.0 scale</p>
+          </div>
+          <div class="summary-card">
+            <h3>Credits Earned</h3>
+            <div class="gpa-value">45</div>
+            <p>Out of 120 required</p>
+          </div>
+        </div>
+        
+        <div class="grades-table-container">
+          <table class="grades-table">
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Instructor</th>
+                <th>Grade</th>
+                <th>Credits</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CS 301 - Data Structures</td>
+                <td>Prof. Smith</td>
+                <td>A</td>
+                <td>4</td>
+                <td><span class="status completed">Completed</span></td>
+              </tr>
+              <tr>
+                <td>MATH 201 - Calculus II</td>
+                <td>Dr. Johnson</td>
+                <td>B+</td>
+                <td>4</td>
+                <td><span class="status completed">Completed</span></td>
+              </tr>
+              <tr>
+                <td>PHYS 101 - Physics I</td>
+                <td>Prof. Williams</td>
+                <td>A-</td>
+                <td>3</td>
+                <td><span class="status completed">Completed</span></td>
+              </tr>
+              <tr>
+                <td>CS 302 - Algorithms</td>
+                <td>Prof. Davis</td>
+                <td>IP</td>
+                <td>4</td>
+                <td><span class="status in-progress">In Progress</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <style>
+    .grades-container {
+      padding: 1rem;
+    }
+    
+    .grades-summary {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .summary-card {
+      flex: 1;
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    
+    .summary-card h3 {
+      color: #6c757d;
+      margin-bottom: 1rem;
+    }
+    
+    .gpa-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #6c63ff;
+      margin-bottom: 0.5rem;
+    }
+    
+    .grades-table-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    
+    .grades-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .grades-table th, .grades-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .grades-table th {
+      background: #f8f9fa;
+      font-weight: 500;
+      color: #6c757d;
+    }
+    
+    .status {
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .status.completed {
+      background: #e6f7ee;
+      color: #1cc88a;
+    }
+    
+    .status.in-progress {
+      background: #fff8e6;
+      color: #f6c23e;
+    }
+  </style>
+</body>
+</html>
