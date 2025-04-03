@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages | E-Tutor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-avatar" id="userInitial">F</div>
+        <h2 id="userName">Faculty Member</h2>
+      </div>
+      <ul>
+        <li><a href="faculty-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="faculty-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
+        <li><a href="faculty-students.html"><i class="fas fa-users"></i> Students</a></li>
+        <li><a href="faculty-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+        <li><a href="faculty-grades.html"><i class="fas fa-graduation-cap"></i> Grades</a></li>
+        <li><a href="faculty-messages.html" class="active"><i class="fas fa-envelope"></i> Messages</a></li>
+        <li><a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </nav>
+    
+    <main class="content">
+      <div class="header">
+        <h1>Messages</h1>
+        <div class="user-menu">
+          <button id="userEmail">faculty@example.com</button>
+          <button class="btn-primary" id="newMessageBtn">
+            <i class="fas fa-plus"></i> New Message
+          </button>
+        </div>
+      </div>
+      
+      <div class="messages-container">
+        <div class="messages-sidebar">
+          <div class="messages-search">
+            <input type="text" placeholder="Search messages...">
+            <button><i class="fas fa-search"></i></button>
+          </div>
+          <div class="messages-folders">
+            <div class="folder active" data-folder="inbox">
+              <i class="fas fa-inbox"></i> Inbox <span class="badge" id="inboxCount">0</span>
+            </div>
+            <div class="folder" data-folder="sent">
+              <i class="fas fa-paper-plane"></i> Sent
+            </div>
+            <div class="folder" data-folder="drafts">
+              <i class="fas fa-file"></i> Drafts
+            </div>
+            <div class="folder" data-folder="trash">
+              <i class="fas fa-trash"></i> Trash
+            </div>
+          </div>
+          <div class="messages-contacts">
+            <h3>Quick Contacts</h3>
+            <div class="contacts-list" id="contactsList">
+              <!-- Will be populated dynamically -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="messages-main">
+          <div class="messages-list" id="messagesList">
+            <!-- Will be populated dynamically -->
+          </div>
+          
+          <div class="message-view" id="messageView">
+            <div class="message-header">
+              <h2 id="messageSubject">No message selected</h2>
+              <div class="message-actions">
+                <button class="btn-secondary" id="replyBtn" disabled><i class="fas fa-reply"></i> Reply</button>
+                <button class="btn-secondary" id="forwardBtn" disabled><i class="fas fa-share"></i> Forward</button>
+                <button class="btn-secondary" id="deleteBtn" disabled><i class="fas fa-trash"></i> Delete</button>
+              </div>
+            </div>
+            <div class="message-details">
+              <div id="messageSender">-</div>
+              <div id="messageDate">-</div>
+              <div id="messageRecipients">-</div>
+            </div>
+            <div class="message-body" id="messageBody">
+              Select a message to view its contents
+            </div>
+            <div class="message-attachments" id="messageAttachments">
+              <!-- Attachments will appear here -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- New Message Modal -->
+      <div id="newMessageModal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <h2>New Message</h2>
+          <form id="messageForm">
+            <div class="form-group">
+              <label for="messageRecipientsInput">To:</label>
+              <select id="messageRecipientsInput" multiple>
+                <!-- Will be populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="messageCcInput">Cc:</label>
+              <select id="messageCcInput" multiple>
+                <!-- Will be populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="messageSubjectInput">Subject:</label>
+              <input type="text" id="messageSubjectInput" required>
+            </div>
+            <div class="form-group">
+              <label for="messageContentInput">Message:</label>
+              <textarea id="messageContentInput" rows="8" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="messageAttachmentsInput">Attachments:</label>
+              <input type="file" id="messageAttachmentsInput" multiple>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" id="saveDraftBtn">Save Draft</button>
+              <button type="submit" class="btn-primary">Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="faculty-messages.js"></script>
+</body>
+</html>
