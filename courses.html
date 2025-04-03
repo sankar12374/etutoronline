@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Same head content as dashboard.html -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Same sidebar as dashboard.html -->
+    
+    <main class="main-content">
+      <div class="header">
+        <h1>My Courses</h1>
+        <!-- Same user actions as dashboard.html -->
+      </div>
+
+      <div class="courses-container fade-in">
+        <div class="course-filters">
+          <div class="filter-group">
+            <label>Semester:</label>
+            <select>
+              <option>All Semesters</option>
+              <option>Fall 2023</option>
+              <option>Spring 2023</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Status:</label>
+            <select>
+              <option>All Courses</option>
+              <option>Active</option>
+              <option>Completed</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="course-list">
+          <div class="course-card">
+            <div class="course-header" style="background: #4e73df;">
+              <h3>CS 301 - Data Structures</h3>
+              <span class="course-code">COMPSCI-301</span>
+            </div>
+            <div class="course-body">
+              <p><i class="fas fa-chalkboard-teacher"></i> Prof. Smith</p>
+              <p><i class="fas fa-calendar-alt"></i> Mon/Wed 10:00-11:30</p>
+              <p><i class="fas fa-university"></i> Building A, Room 205</p>
+            </div>
+            <div class="course-footer">
+              <a href="#" class="btn-outline"><i class="fas fa-book-open"></i> Materials</a>
+              <a href="#" class="btn-primary"><i class="fas fa-tasks"></i> Assignments</a>
+            </div>
+          </div>
+          
+          <div class="course-card">
+            <div class="course-header" style="background: #1cc88a;">
+              <h3>MATH 201 - Calculus II</h3>
+              <span class="course-code">MATH-201</span>
+            </div>
+            <div class="course-body">
+              <p><i class="fas fa-chalkboard-teacher"></i> Dr. Johnson</p>
+              <p><i class="fas fa-calendar-alt"></i> Tue/Thu 13:00-14:30</p>
+              <p><i class="fas fa-university"></i> Building B, Room 101</p>
+            </div>
+            <div class="course-footer">
+              <a href="#" class="btn-outline"><i class="fas fa-book-open"></i> Materials</a>
+              <a href="#" class="btn-primary"><i class="fas fa-tasks"></i> Assignments</a>
+            </div>
+          </div>
+          
+          <!-- Add more course cards as needed -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <style>
+    .courses-container {
+      padding: 1rem;
+    }
+    
+    .course-filters {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .filter-group label {
+      font-weight: 500;
+    }
+    
+    .filter-group select {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    
+    .course-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .course-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s;
+    }
+    
+    .course-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .course-header {
+      padding: 1rem;
+      color: white;
+    }
+    
+    .course-header h3 {
+      margin-bottom: 0.3rem;
+    }
+    
+    .course-code {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+    
+    .course-body {
+      padding: 1rem;
+    }
+    
+    .course-body p {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .course-body i {
+      width: 20px;
+      text-align: center;
+    }
+    
+    .course-footer {
+      display: flex;
+      padding: 1rem;
+      border-top: 1px solid #eee;
+      gap: 0.5rem;
+    }
+    
+    .btn-outline, .btn-primary {
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .btn-outline {
+      border: 1px solid #6c63ff;
+      color: #6c63ff;
+    }
+    
+    .btn-primary {
+      background: #6c63ff;
+      color: white;
+      border: none;
+    }
+  </style>
+</body>
+</html>
