@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Same head content as dashboard.html -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Same sidebar as dashboard.html -->
+    
+    <main class="main-content">
+      <div class="header">
+        <h1>My Assignments</h1>
+        <!-- Same user actions as dashboard.html -->
+      </div>
+
+      <div class="assignments-container fade-in">
+        <div class="assignment-tabs">
+          <button class="tab-btn active">Pending (3)</button>
+          <button class="tab-btn">Submitted (5)</button>
+          <button class="tab-btn">Graded (12)</button>
+        </div>
+        
+        <div class="assignment-list">
+          <div class="assignment-card urgent">
+            <div class="assignment-header">
+              <h3>Final Project - Data Structures</h3>
+              <span class="due-date"><i class="fas fa-clock"></i> Due: Oct 28, 2023</span>
+            </div>
+            <div class="assignment-body">
+              <p><strong>Course:</strong> CS 301 - Data Structures</p>
+              <p><strong>Description:</strong> Implement a graph traversal algorithm with visualization</p>
+              <p><strong>Points:</strong> 100</p>
+            </div>
+            <div class="assignment-footer">
+              <a href="#" class="btn-outline"><i class="fas fa-file-download"></i> Download</a>
+              <a href="#" class="btn-primary"><i class="fas fa-upload"></i> Submit</a>
+            </div>
+          </div>
+          
+          <div class="assignment-card">
+            <div class="assignment-header">
+              <h3>Chapter 5 Exercises</h3>
+              <span class="due-date"><i class="fas fa-clock"></i> Due: Nov 2, 2023</span>
+            </div>
+            <div class="assignment-body">
+              <p><strong>Course:</strong> MATH 201 - Calculus II</p>
+              <p><strong>Description:</strong> Solve problems 1-15 from chapter 5</p>
+              <p><strong>Points:</strong> 50</p>
+            </div>
+            <div class="assignment-footer">
+              <a href="#" class="btn-outline"><i class="fas fa-file-download"></i> Download</a>
+              <a href="#" class="btn-primary"><i class="fas fa-upload"></i> Submit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <style>
+    .assignments-container {
+      padding: 1rem;
+    }
+    
+    .assignment-tabs {
+      display: flex;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 1.5rem;
+    }
+    
+    .tab-btn {
+      padding: 0.8rem 1.5rem;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .tab-btn.active {
+      color: #6c63ff;
+      border-bottom-color: #6c63ff;
+    }
+    
+    .assignment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .assignment-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    
+    .assignment-card.urgent {
+      border-left: 4px solid #ff6f61;
+    }
+    
+    .assignment-header {
+      padding: 1rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .assignment-header h3 {
+      margin: 0;
+    }
+    
+    .due-date {
+      color: #6c757d;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .assignment-body {
+      padding: 1rem;
+    }
+    
+    .assignment-body p {
+      margin-bottom: 0.5rem;
+    }
+    
+    .assignment-footer {
+      padding: 1rem;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: 0.5rem;
+    }
+  </style>
+</body>
+</html>
