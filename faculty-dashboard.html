@@ -6,228 +6,518 @@
   <title>Faculty Dashboard | E-Tutor</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --primary-color: #4e73df;
+      --primary-light: #7e9efd;
+      --primary-dark: #2c56b8;
+      --success-color: #1cc88a;
+      --warning-color: #f6c23e;
+      --danger-color: #e74a3b;
+      --light-color: #f8f9fc;
+      --dark-color: #5a5c69;
+      --gray-color: #858796;
+      --light-gray: #dddfeb;
+      --sidebar-width: 250px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f8f9fc;
+      color: var(--dark-color);
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar Styles */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(180deg, var(--primary-color) 10%, #224abe 100%);
+      color: white;
+      padding: 1.5rem 0;
+      position: fixed;
+      height: 100vh;
+      box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+    
+    .sidebar-header {
+      padding: 0 1.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    
+    .sidebar h2 {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .user-role {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .nav-menu {
+      padding: 1rem 0;
+    }
+    
+    .nav-item {
+      margin-bottom: 0.25rem;
+    }
+    
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    
+    .nav-link i {
+      margin-right: 0.75rem;
+      width: 20px;
+      text-align: center;
+    }
+    
+    .nav-notification {
+      margin-left: auto;
+      background: var(--danger-color);
+      color: white;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+    }
+    
+    /* Main Content Styles */
+    .content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      padding: 1.5rem;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .header-left h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .breadcrumb {
+      font-size: 0.85rem;
+      color: var(--gray-color);
+    }
+    
+    .breadcrumb a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    
+    .search-box {
+      position: relative;
+      margin-right: 1rem;
+    }
+    
+    .search-box input {
+      padding: 0.5rem 1rem 0.5rem 2.5rem;
+      border: 1px solid var(--light-gray);
+      border-radius: 20px;
+      width: 200px;
+    }
+    
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-color);
+    }
+    
+    .notification-bell {
+      position: relative;
+      margin-right: 1.5rem;
+      color: var(--dark-color);
+      cursor: pointer;
+    }
+    
+    .notification-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--danger-color);
+      color: white;
+      font-size: 0.7rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .profile-dropdown {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .profile-info {
+      display: flex;
+      align-items: center;
+    }
+    
+    .profile-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 0.75rem;
+      border: 2px solid var(--primary-color);
+    }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      width: 200px;
+      border-radius: 5px;
+      box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+      padding: 0.5rem 0;
+      z-index: 100;
+      display: none;
+    }
+    
+    .profile-dropdown:hover .dropdown-menu {
+      display: block;
+    }
+    
+    .dropdown-menu a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: var(--dark-color);
+      text-decoration: none;
+    }
+    
+    .dropdown-menu a:hover {
+      background: var(--light-color);
+    }
+    
+    .dropdown-menu a i {
+      margin-right: 0.5rem;
+      width: 20px;
+      text-align: center;
+    }
+    
+    /* Stats Cards */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 5px;
+      padding: 1.5rem;
+      box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .stat-card.success {
+      border-left-color: var(--success-color);
+    }
+    
+    .stat-card.warning {
+      border-left-color: var(--warning-color);
+    }
+    
+    .stat-card h3 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--gray-color);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    
+    .stat-change {
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+    
+    .stat-change.positive {
+      color: var(--success-color);
+    }
+    
+    .stat-change i {
+      margin-right: 0.25rem;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 70px;
+        overflow: hidden;
+      }
+      
+      .sidebar-header h2,
+      .user-role,
+      .nav-link span {
+        display: none;
+      }
+      
+      .sidebar-header {
+        padding: 1rem 0;
+        align-items: center;
+      }
+      
+      .sidebar-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+      
+      .nav-link {
+        justify-content: center;
+        padding: 0.75rem;
+      }
+      
+      .nav-link i {
+        margin-right: 0;
+        font-size: 1.25rem;
+      }
+      
+      .content {
+        margin-left: 70px;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .header-right {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .search-box input {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="dashboard-container">
-    <!-- Side Navigation -->
-    <nav class="sidebar">
-      <div class="sidebar-header">
-        <div class="sidebar-avatar" id="userInitial">
-          <img src="assets/default-avatar.jpg" alt="User Avatar" id="userAvatar">
-        </div>
-        <div>
-          <h2 id="userName">Faculty Member</h2>
-          <p class="user-role">Professor</p>
-        </div>
-      </div>
-      <ul class="nav-menu">
-        <li class="nav-item active">
-          <a href="faculty-dashboard.html" class="nav-link">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-            <span class="nav-notification">3</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="faculty-courses.html" class="nav-link">
-            <i class="fas fa-book-open"></i>
-            <span>My Courses</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="faculty-students.html" class="nav-link">
-            <i class="fas fa-user-graduate"></i>
-            <span>Students</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="faculty-assignments.html" class="nav-link">
-            <i class="fas fa-tasks"></i>
-            <span>Assignments</span>
-            <span class="nav-notification">5</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="faculty-grades.html" class="nav-link">
-            <i class="fas fa-clipboard-check"></i>
-            <span>Grades</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="faculty-messages.html" class="nav-link">
-            <i class="fas fa-comments"></i>
-            <span>Messages</span>
-            <span class="nav-notification">2</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="faculty-settings.html" class="nav-link">
-            <i class="fas fa-cog"></i>
-            <span>Settings</span>
-          </a>
-        </li>
-        <li class="nav-item logout">
-          <a href="index.html" class="nav-link" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-avatar" id="userInitial">F</div>
+      <h2 id="userName">Faculty Member</h2>
+      <div class="user-role">Professor</div>
+    </div>
     
-    <!-- Main Content -->
-    <main class="content">
-      <div class="header">
-        <div class="header-left">
-          <h1>Dashboard Overview</h1>
-          <div class="breadcrumb">
-            <a href="#">Home</a> / <span>Dashboard</span>
+    <ul class="nav-menu">
+      <li class="nav-item active">
+        <a href="faculty-dashboard.html" class="nav-link">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+          <span class="nav-notification">3</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="faculty-courses.html" class="nav-link">
+          <i class="fas fa-book"></i>
+          <span>My Courses</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="faculty-students.html" class="nav-link">
+          <i class="fas fa-users"></i>
+          <span>Students</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="faculty-assignments.html" class="nav-link">
+          <i class="fas fa-tasks"></i>
+          <span>Assignments</span>
+          <span class="nav-notification">5</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="faculty-grades.html" class="nav-link">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Grades</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="faculty-messages.html" class="nav-link">
+          <i class="fas fa-comments"></i>
+          <span>Messages</span>
+          <span class="nav-notification">2</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="faculty-settings.html" class="nav-link">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="index.html" class="nav-link" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="content">
+    <div class="header">
+      <div class="header-left">
+        <h1>Dashboard Overview</h1>
+        <div class="breadcrumb">
+          <a href="faculty-dashboard.html">Home</a> / <span>Dashboard</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search...">
+        </div>
+        <div class="notification-bell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-count">4</span>
+        </div>
+        <div class="profile-dropdown">
+          <div class="profile-info">
+            <img src="https://via.placeholder.com/40" alt="Profile" id="profileAvatar">
+            <span id="profileName">Dr. Smith</span>
+          </div>
+          <div class="dropdown-menu">
+            <a href="faculty-profile.html"><i class="fas fa-user"></i> My Profile</a>
+            <a href="faculty-settings.html"><i class="fas fa-cog"></i> Settings</a>
+            <a href="help.html"><i class="fas fa-question-circle"></i> Help</a>
+            <a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
           </div>
         </div>
-        <div class="header-right">
-          <div class="search-box">
-            <input type="text" placeholder="Search...">
-            <button><i class="fas fa-search"></i></button>
-          </div>
-          <div class="user-profile">
-            <div class="notification-bell">
-              <i class="fas fa-bell"></i>
-              <span class="notification-count">4</span>
-            </div>
-            <div class="profile-dropdown" id="profileDropdown">
-              <div class="profile-info">
-                <img src="assets/default-avatar.jpg" alt="Profile" id="profileAvatar">
-                <span id="profileName">Dr. Smith</span>
-                <i class="fas fa-chevron-down"></i>
-              </div>
-              <div class="dropdown-menu">
-                <a href="#"><i class="fas fa-user"></i> My Profile</a>
-                <a href="#"><i class="fas fa-cog"></i> Settings</a>
-                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
-                <a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-              </div>
-            </div>
-          </div>
+      </div>
+    </div>
+    
+    <div class="stats-container">
+      <div class="stat-card">
+        <h3>Active Courses</h3>
+        <div class="stat-value">5</div>
+        <div class="stat-change positive">
+          <i class="fas fa-arrow-up"></i> 2 from last term
         </div>
       </div>
       
-      <!-- Stats Cards -->
-      <div class="stats-container">
-        <div class="stat-card primary">
-          <div class="stat-icon">
-            <i class="fas fa-book"></i>
-          </div>
-          <div class="stat-info">
-            <h3>Active Courses</h3>
-            <div class="stat-value" id="activeCourses">5</div>
-            <div class="stat-change positive">
-              <i class="fas fa-arrow-up"></i> 2 from last term
-            </div>
-          </div>
-        </div>
-        
-        <div class="stat-card success">
-          <div class="stat-icon">
-            <i class="fas fa-users"></i>
-          </div>
-          <div class="stat-info">
-            <h3>Total Students</h3>
-            <div class="stat-value" id="totalStudents">87</div>
-            <div class="stat-change positive">
-              <i class="fas fa-arrow-up"></i> 12% from last term
-            </div>
-          </div>
-        </div>
-        
-        <div class="stat-card warning">
-          <div class="stat-icon">
-            <i class="fas fa-clipboard-list"></i>
-          </div>
-          <div class="stat-info">
-            <h3>Pending Grading</h3>
-            <div class="stat-value" id="pendingGrading">12</div>
-            <div class="stat-change negative">
-              <i class="fas fa-arrow-down"></i> 3 overdue
-            </div>
-          </div>
+      <div class="stat-card success">
+        <h3>Total Students</h3>
+        <div class="stat-value">87</div>
+        <div class="stat-change positive">
+          <i class="fas fa-arrow-up"></i> 12% from last term
         </div>
       </div>
       
-      <!-- Charts Row -->
-      <div class="charts-row">
-        <div class="chart-card">
-          <div class="chart-header">
-            <h3>Course Enrollment</h3>
-            <select class="chart-filter">
-              <option>This Semester</option>
-              <option>Last Semester</option>
-              <option>This Year</option>
-            </select>
-          </div>
-          <canvas id="enrollmentChart"></canvas>
-        </div>
-        
-        <div class="chart-card">
-          <div class="chart-header">
-            <h3>Assignment Completion</h3>
-            <select class="chart-filter">
-              <option>All Courses</option>
-              <option>CS 301</option>
-              <option>MATH 201</option>
-            </select>
-          </div>
-          <canvas id="completionChart"></canvas>
+      <div class="stat-card warning">
+        <h3>Pending Grading</h3>
+        <div class="stat-value">12</div>
+        <div class="stat-change negative">
+          <i class="fas fa-arrow-down"></i> 3 overdue
         </div>
       </div>
-      
-      <!-- Recent Activity and Upcoming Deadlines -->
-      <div class="content-row">
-        <div class="activity-card">
-          <div class="card-header">
-            <h3>Recent Activity</h3>
-            <a href="#" class="view-all">View All</a>
-          </div>
-          <div class="activity-list" id="recentActivity">
-            <!-- Activity items will be loaded here -->
-          </div>
-        </div>
-        
-        <div class="deadlines-card">
-          <div class="card-header">
-            <h3>Upcoming Deadlines</h3>
-            <a href="#" class="view-all">View All</a>
-          </div>
-          <div class="deadlines-list" id="upcomingDeadlines">
-            <!-- Deadline items will be loaded here -->
-          </div>
-        </div>
-      </div>
-      
-      <!-- Recent Courses -->
-      <div class="courses-card">
-        <div class="card-header">
-          <h3>Your Courses</h3>
-          <div class="course-actions">
-            <button class="btn btn-outline">
-              <i class="fas fa-sync-alt"></i> Refresh
-            </button>
-            <button class="btn btn-primary">
-              <i class="fas fa-plus"></i> Add Course
-            </button>
-          </div>
-        </div>
-        <div class="courses-grid" id="coursesGrid">
-          <!-- Course cards will be loaded here -->
-        </div>
-      </div>
-    </main>
+    </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="js/auth.js"></script>
-  <script src="js/faculty-dashboard.js"></script>
+  <script>
+    // Initialize profile dropdown functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const profileDropdown = document.querySelector('.profile-dropdown');
+      
+      profileDropdown.addEventListener('click', function() {
+        const menu = this.querySelector('.dropdown-menu');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!profileDropdown.contains(e.target)) {
+          profileDropdown.querySelector('.dropdown-menu').style.display = 'none';
+        }
+      });
+      
+      // Set active nav item based on current page
+      const currentPage = window.location.pathname.split('/').pop() || 'faculty-dashboard.html';
+      document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+          link.parentElement.classList.add('active');
+        } else {
+          link.classList.remove('active');
+          link.parentElement.classList.remove('active');
+        }
+      });
+      
+      // Simulate loading user data
+      setTimeout(() => {
+        document.getElementById('userName').textContent = 'Dr. Jane Smith';
+        document.getElementById('userInitial').textContent = 'J';
+        document.getElementById('profileName').textContent = 'Dr. Jane Smith';
+      }, 500);
+    });
+    
+    function logout() {
+      // Add logout functionality here
+      console.log('Logging out...');
+      // In a real application, you would call your authentication service here
+      // window.location.href = 'index.html';
+    }
+  </script>
 </body>
 </html>
