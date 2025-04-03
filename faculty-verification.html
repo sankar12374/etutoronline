@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Verification | E-Tutor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --primary-color: #6c63ff;
+      --secondary-color: #5a52d3;
+      --accent-color: #ff6f61;
+      --light-color: #f8f9fa;
+      --dark-color: #343a40;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .verification-container {
+      width: 100%;
+      max-width: 800px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    .verification-header {
+      background: var(--primary-color);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    
+    .verification-header h1 {
+      font-weight: 500;
+      font-size: 1.8rem;
+    }
+    
+    .verification-header p {
+      opacity: 0.9;
+      margin-top: 0.5rem;
+    }
+    
+    .verification-steps {
+      display: flex;
+      background: #f8f9fa;
+      padding: 0.5rem;
+    }
+    
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 0.8rem;
+      font-weight: 500;
+      color: #6c757d;
+      position: relative;
+    }
+    
+    .step.completed {
+      color: var(--primary-color);
+    }
+    
+    .step.active {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .step.active::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 3px;
+      background: var(--primary-color);
+    }
+    
+    .verification-content {
+      padding: 2rem;
+    }
+    
+    .exam-instructions {
+      background: #f8f9fa;
+      border-left: 4px solid var(--primary-color);
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 0 5px 5px 0;
+    }
+    
+    .exam-instructions h3 {
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+    
+    .exam-instructions ul {
+      padding-left: 1.5rem;
+    }
+    
+    .exam-instructions li {
+      margin-bottom: 0.3rem;
+    }
+    
+    .question-container {
+      margin-bottom: 2rem;
+    }
+    
+    .question {
+      font-weight: 500;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    
+    .options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+    
+    .option {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .option:hover {
+      border-color: var(--primary-color);
+      background: rgba(108, 99, 255, 0.05);
+    }
+    
+    .option input {
+      margin-right: 1rem;
+    }
+    
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+    
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background: var(--secondary-color);
+    }
+    
+    .btn-outline {
+      background: white;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+    }
+    
+    .btn-outline:hover {
+      background: rgba(108, 99, 255, 0.1);
+    }
+    
+    .timer {
+      background: #fff8e6;
+      color: #e6a700;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .timer i {
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="verification-container">
+    <div class="verification-header">
+      <h1>Faculty Verification Exam</h1>
+      <p>Complete this assessment to verify your teaching qualifications</p>
+    </div>
+    
+    <div class="verification-steps">
+      <div class="step completed">1. Personal Details</div>
+      <div class="step active">2. Verification Exam</div>
+      <div class="step">3. Approval</div>
+    </div>
+    
+    <div class="verification-content">
+      <div class="exam-instructions">
+        <h3>Exam Instructions</h3>
+        <ul>
+          <li>This exam consists of 10 multiple-choice questions</li>
+          <li>You have 20 minutes to complete the exam</li>
+          <li>You must score at least 70% to pass</li>
+          <li>Do not refresh the page or navigate away during the exam</li>
+        </ul>
+      </div>
+      
+      <div class="timer">
+        <i class="fas fa-clock"></i>
+        <span id="time">20:00</span>
+      </div>
+      
+      <form id="verificationExam">
+        <!-- Question 1 -->
+        <div class="question-container">
+          <div class="question">1. Which of the following is the most important factor in student engagement?</div>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q1" value="a"> Lecture duration
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="b"> Active learning techniques
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="c"> Amount of homework assigned
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="d"> Strict grading policies
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 2 -->
+        <div class="question-container">
+          <div class="question">2. When a student is struggling with a concept, your first action should be:</div>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q2" value="a"> Assign more practice problems
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="b"> Identify the specific misunderstanding
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="c"> Recommend they seek tutoring
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="d"> Move on to keep pace with the syllabus
+            </label>
+          </div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="question-container">
+          <div class="question">3. The primary purpose of formative assessment is to:</div>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q3" value="a"> Assign grades to students
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="b"> Provide feedback for improvement
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="c"> Compare students against each other
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="d"> Satisfy administrative requirements
+            </label>
+          </div>
+        </div>
+        
+        <!-- Add more questions as needed (up to 10) -->
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline">Save & Exit</button>
+          <button type="submit" class="btn btn-primary">Submit Exam</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Supabase configuration
+    const supabaseUrl = 'https://your-project.supabase.co';
+    const supabaseKey = 'your-anon-key';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Timer functionality
+    let timeLeft = 20 * 60; // 20 minutes in seconds
+    const timerElement = document.getElementById('time');
+    
+    const timer = setInterval(() => {
+      timeLeft--;
+      
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      
+      timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        alert('Time is up! Your exam will be automatically submitted.');
+        submitExam();
+      }
+    }, 1000);
+    
+    // Form submission
+    document.getElementById('verificationExam').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await submitExam();
+    });
+    
+    async function submitExam() {
+      clearInterval(timer);
+      
+      // In a real app, you would:
+      // 1. Calculate the score
+      // 2. Update the faculty profile with exam results
+      // 3. Notify admin for approval
+      
+      try {
+        // Get current user
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          throw new Error('User not authenticated');
+        }
+        
+        // Update faculty profile with exam completion
+        const { error } = await supabase
+          .from('faculty_profiles')
+          .update({ 
+            verification_exam_completed: true,
+            verification_exam_passed: true, // In real app, check actual score
+            status: 'pending_approval'
+          })
+          .eq('user_id', user.id);
+          
+        if (error) throw error;
+        
+        // Redirect to confirmation page
+        window.location.href = 'verification-complete.html';
+        
+      } catch (error) {
+        console.error('Exam submission error:', error);
+        alert('There was an error submitting your exam. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>
