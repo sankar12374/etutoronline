@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students | E-Tutor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-avatar" id="userInitial">F</div>
+        <h2 id="userName">Faculty Member</h2>
+      </div>
+      <ul>
+        <li><a href="faculty-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li><a href="faculty-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
+        <li><a href="faculty-students.html" class="active"><i class="fas fa-users"></i> Students</a></li>
+        <li><a href="faculty-assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+        <li><a href="faculty-grades.html"><i class="fas fa-graduation-cap"></i> Grades</a></li>
+        <li><a href="faculty-messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+        <li><a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </nav>
+    
+    <main class="content">
+      <div class="header">
+        <h1>Students</h1>
+        <div class="user-menu">
+          <button id="userEmail">faculty@example.com</button>
+        </div>
+      </div>
+      
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="courseFilter">Filter by Course:</label>
+          <select id="courseFilter">
+            <option value="all">All Courses</option>
+            <!-- Will be populated dynamically -->
+          </select>
+        </div>
+        <div class="search-group">
+          <input type="text" id="studentSearch" placeholder="Search students...">
+          <button class="btn-secondary"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+      
+      <div class="students-table-container">
+        <table class="students-table" id="studentsTable">
+          <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Courses</th>
+              <th>Performance</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Will be populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="pagination">
+        <button class="btn-secondary" id="prevPage" disabled>Previous</button>
+        <span id="pageInfo">Page 1 of 1</span>
+        <button class="btn-secondary" id="nextPage" disabled>Next</button>
+      </div>
+      
+      <!-- Student Details Modal -->
+      <div id="studentModal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal">&times;</span>
+          <div id="studentDetails">
+            <!-- Will be populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="faculty-students.js"></script>
+</body>
+</html>
