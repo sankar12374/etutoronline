@@ -19,10 +19,10 @@
     </div>
     <div class="login-box faculty">
       <h2>Faculty Login</h2>
-      <input type="text" placeholder="Username" class="input-box">
-      <input type="password" placeholder="Password" class="input-box">
-      <button class="input-box">Login</button>
-      <p class="register">Not registered? <a href="#">Please register here</a></p>
+      <input type="text" id="faculty-email" placeholder="Email" required class="input-box">
+      <input type="password" id="faculty-password" placeholder="Password" required class="input-box">
+      <button class="input-box" onclick="facultyLogin()">Login</button>
+      <p class="register">Not registered? <a href="faculty-register.html">Please register here</a></p>
     </div>
   </div>
   <div class="e-tutor pen">🖊️</div>
@@ -39,16 +39,53 @@
       const password = document.getElementById('student-password').value;
 
       try {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ 
+          email, 
+          password,
+          options: {
+            data: {
+              user_type: 'student'
+            }
+          }
+        });
 
-        if (error) {
-          throw error;
-        }
-
-        alert('Login successful! Welcome, ' + data.user.email);
-        window.location.href = 'login.html'; // Redirect to login.html after successful login
+        if (error) throw error;
+        
+        alert('Student login successful!');
+        window.location.href = 'student-dashboard.html';
       } catch (error) {
         alert('Login failed: ' + error.message);
+      }
+    }
+
+    async function facultyLogin() {
+      const email = document.getElementById('faculty-email').value;
+      const password = document.getElementById('faculty-password').value;
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ 
+          email, 
+          password,
+          options: {
+            data: {
+              user_type: 'faculty'
+            }
+          }
+        });
+
+        if (error) throw error;
+        
+        // Verify user metadata contains faculty type
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user.user_metadata?.user_type !== 'faculty') {
+          await supabase.auth.signOut();
+          throw new Error('Faculty access only');
+        }
+
+        alert('Faculty login successful!');
+        window.location.href = 'faculty-dashboard.html';
+      } catch (error) {
+        alert('Faculty login failed: ' + error.message);
       }
     }
   </script>
